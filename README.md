@@ -1,4 +1,4 @@
-# Restsharp API Automation Demo
+# RestSharp API Automation Demo
 
 ### Pre-requisites
 * VSCode
