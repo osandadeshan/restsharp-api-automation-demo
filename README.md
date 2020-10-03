@@ -8,7 +8,7 @@
 1. Clone or download the project
 2. Import the project into VSCode
 3. Open the terminal in VSCode
-4. Execute following commands
-    `dotnet restore`
+4. Execute following commands \
+    `dotnet restore` \
     `dotnet build`
 5. Execute the tests from "test" folder
