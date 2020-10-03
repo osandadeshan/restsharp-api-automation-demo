@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RestSharp;
 
-namespace RestSharpDemo.ExtentReportManager
+namespace RestSharpAPIAutomationDemo.ExtentReportManager
 {
     class RestMethods
     {
@@ -20,6 +17,7 @@ namespace RestSharpDemo.ExtentReportManager
             res = new RestClient().Get(request);
             return res;
         }
+
         public static IRestResponse getWithPathParam(Dictionary<String, String> paramMap, String URL2)
         {
             reqURL = URL2;
@@ -34,6 +32,7 @@ namespace RestSharpDemo.ExtentReportManager
             res = new RestClient().Get(request);
             return res;
         }
+
         public static IRestResponse postWithJsonBodyParam(String jsonObject, String URL2, String contentType)
         {
             reqURL = URL2;
@@ -49,6 +48,7 @@ namespace RestSharpDemo.ExtentReportManager
             res = new RestClient().Post(request);
             return res;
         }
+
         public static IRestResponse putWithJsonBodyParam(JsonObject jsonObject, String URL2)
         {
             reqURL = URL2;
@@ -56,6 +56,7 @@ namespace RestSharpDemo.ExtentReportManager
             res = new RestClient().Put(request);
             return res;
         }
+
         public static IRestResponse deleteWithPathParam(String URL2)
         {
             reqURL = URL2;

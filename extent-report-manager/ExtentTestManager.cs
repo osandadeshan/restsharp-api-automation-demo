@@ -1,20 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AventStack.ExtentReports;
-using AventStack.ExtentReports.Reporter;
-using System.Configuration;
 using System.Runtime.CompilerServices;
-using System.IO;
 using System.Threading;
 
-namespace RestSharpDemo.ExtentReportManager
+namespace RestSharpAPIAutomationDemo.ExtentReportManager
 {
     class ExtentTestManager
     {
-
         public static ThreadLocal<ExtentTest> extentTest = new ThreadLocal<ExtentTest>();
         public static ExtentReports extent = ExtentManager.getExtent();
         public static ExtentTest test;
@@ -32,6 +24,7 @@ namespace RestSharpDemo.ExtentReportManager
             extentTest.Value = test;
             return getTest();
         }
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static ExtentTest createTest(String name, String description)
         {
@@ -43,6 +36,7 @@ namespace RestSharpDemo.ExtentReportManager
         {
             return createTest(name, "Sample Test");
         }
+        
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static void logger(String message)
         {

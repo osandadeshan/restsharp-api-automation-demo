@@ -1,39 +1,33 @@
 ﻿using AventStack.ExtentReports;
-using AventStack.ExtentReports.Reporter;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using System.Configuration;
-using System.Collections;
-using RestSharp;
 
-namespace RestSharpDemo.ExtentReportManager
+namespace RestSharpAPIAutomationDemo.ExtentReportManager
 {
     [SetUpFixture]
     public abstract class ReportListener
     {
-        
         [OneTimeSetUp]
         protected void Setup()
         {
             ExtentReportManager.ExtentManager.getExtent();
         }
+
         [OneTimeTearDown]
         protected void TearDown()
         {
             ExtentReportManager.ExtentManager.getExtent().Flush();
         }
+
         [SetUp]
         public void BeforeTest()
         {
             String methodName = TestContext.CurrentContext.Test.MethodName;
             ExtentReportManager.ExtentTestManager.createTest(TestContext.CurrentContext.Test.Name, getTestCategories(methodName));
         }
+
         [TearDown]
         public void AfterTest()
         {
@@ -42,7 +36,6 @@ namespace RestSharpDemo.ExtentReportManager
                     ? ""
                     : string.Format("{0}", TestContext.CurrentContext.Result.StackTrace);
             Status logstatus;
-
             switch (status)
             {
                 case TestStatus.Failed:
@@ -69,6 +62,7 @@ namespace RestSharpDemo.ExtentReportManager
             }
             ExtentReportManager.ExtentManager.getExtent().Flush();
         }
+
         public String getTestCategories(String methodName)
         {
             var myAttribute = this.GetType().GetMethod(methodName).GetCustomAttributes(true).OfType<CategoryAttribute>().FirstOrDefault();

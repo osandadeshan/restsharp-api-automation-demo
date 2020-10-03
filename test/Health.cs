@@ -1,14 +1,16 @@
 using RestSharp;
 using NUnit.Framework;
 using Newtonsoft.Json.Linq;
-using RestSharpDemo.ExtentReportManager;
+using RestSharpAPIAutomationDemo.ExtentReportManager;
 
-namespace RestSharpDemo.TestSuite
+namespace RestSharpAPIAutomationDemo.Test
 {
     [TestFixture]
     class Health : ReportListener
     {
         [Test]
+        [Description("Check Health route of the API")]
+        [Author("Osanda Nimalarathna")]
         [Category("Health")]
         public void checkHealthStatus()
         {
