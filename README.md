@@ -2,7 +2,7 @@
 
 ### Pre-requisites
 * VSCode
-* [.NET Core SDK 3.1] (https://dotnet.microsoft.com/download/dotnet-core/thank-you/sdk-3.1.402-windows-x64-installer)
+* [.NET Core SDK 3.1](https://dotnet.microsoft.com/download/dotnet-core/thank-you/sdk-3.1.402-windows-x64-installer)
 
 ### Setup Guide
 1. Clone or download the project
