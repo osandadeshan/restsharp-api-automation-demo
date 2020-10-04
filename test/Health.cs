@@ -1,23 +1,31 @@
+using System;
 using RestSharp;
 using NUnit.Framework;
 using Newtonsoft.Json.Linq;
-using RestSharpAPIAutomationDemo.ExtentReportManager;
+using RestSharpAPIAutomationDemo.RestSharpBase;
+using System.Collections.Generic;
 
 namespace RestSharpAPIAutomationDemo.Test
 {
     [TestFixture]
-    class Health : ReportListener
+    class Health : BaseTest
     {
+        private IRestResponse response;
+
         [Test]
-        [Description("Check Health route of the API")]
+        [Description("Verify that the Health route is up and running")]
         [Author("Osanda Nimalarathna")]
         [Category("Health")]
-        public void checkHealthStatus()
+        public void VerifyHealthStatus()
         {
-            var client = new RestClient("https://maxsoft-mock-server-demo.web.app");
-            var request = new RestRequest("/say/hello?name=Osanda", DataFormat.Json);
+            Dictionary<String, String> pathParamMap = new Dictionary<String, String>();
+            pathParamMap.Add("pathParam1", "say");
+            pathParamMap.Add("pathParam2", "hello");
 
-            var response = client.Get(request);
+            Dictionary<String, String> queryParamMap = new Dictionary<String, String>();
+            queryParamMap.Add("name", "Osanda");
+
+            response = RestMethods.GetWithPathAndQueryParam(pathParamMap, queryParamMap, baseUrl);
             var responseJsonObject = JObject.Parse(response.Content);
 
             Assert.AreEqual(System.Net.HttpStatusCode.OK, response.StatusCode);

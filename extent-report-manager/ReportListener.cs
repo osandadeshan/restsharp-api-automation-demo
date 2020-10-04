@@ -3,6 +3,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using System;
 using System.Linq;
+using RestSharpAPIAutomationDemo.RestSharpBase;
 
 namespace RestSharpAPIAutomationDemo.ExtentReportManager
 {
@@ -12,20 +13,20 @@ namespace RestSharpAPIAutomationDemo.ExtentReportManager
         [OneTimeSetUp]
         protected void Setup()
         {
-            ExtentReportManager.ExtentManager.getExtent();
+            ExtentReportManager.ExtentManager.GetExtent();
         }
 
         [OneTimeTearDown]
         protected void TearDown()
         {
-            ExtentReportManager.ExtentManager.getExtent().Flush();
+            ExtentReportManager.ExtentManager.GetExtent().Flush();
         }
 
         [SetUp]
         public void BeforeTest()
         {
             String methodName = TestContext.CurrentContext.Test.MethodName;
-            ExtentReportManager.ExtentTestManager.createTest(TestContext.CurrentContext.Test.Name, getTestCategories(methodName));
+            ExtentReportManager.ExtentTestManager.CreateTest(TestContext.CurrentContext.Test.Name, GetTestCategories(methodName));
         }
 
         [TearDown]
@@ -35,35 +36,43 @@ namespace RestSharpAPIAutomationDemo.ExtentReportManager
             var stacktrace = string.IsNullOrEmpty(TestContext.CurrentContext.Result.StackTrace)
                     ? ""
                     : string.Format("{0}", TestContext.CurrentContext.Result.StackTrace);
+            var errorMessage = string.IsNullOrEmpty(TestContext.CurrentContext.Result.Message)
+                    ? ""
+                    : string.Format("{0}", TestContext.CurrentContext.Result.Message);        
             Status logstatus;
             switch (status)
             {
                 case TestStatus.Failed:
                     logstatus = Status.Fail;
-                    ExtentReportManager.ExtentTestManager.getTest().Log(Status.Fail, "<b style=\"color: Red; \">Fail</b>");
-                    ExtentReportManager.ExtentTestManager.getTest().Log(logstatus, "Test ended with: " + stacktrace);
-                    ExtentReportManager.ExtentTestManager.getTest().Log(Status.Info, RestMethods.reqURL);
-                    ExtentReportManager.ExtentTestManager.getTest().Log(Status.Info, RestMethods.res.Content);
+                    ExtentReportManager.ExtentTestManager.GetTest().Log(Status.Fail, "<b style=\"color: Red; \">Failed</b>");
+                    ExtentReportManager.ExtentTestManager.GetTest().Log(logstatus, "<b>Exception: </b> <br />" + errorMessage);
+                    ExtentReportManager.ExtentTestManager.GetTest().Log(logstatus, "<b>StackTrace: </b> <br />" + stacktrace);
+                    ExtentReportManager.ExtentTestManager.GetTest().Log(Status.Info, "<b>Response URL: </b> <br />" + RestMethods.response.ResponseUri.AbsoluteUri);
+                    ExtentReportManager.ExtentTestManager.GetTest().Log(Status.Info, "<b>Response Status: </b> <br />" + RestMethods.response.ResponseStatus.ToString());
+                    ExtentReportManager.ExtentTestManager.GetTest().Log(Status.Info, "<b>Response Status Code: </b> <br />" + RestMethods.response.StatusCode.ToString());
+                    ExtentReportManager.ExtentTestManager.GetTest().Log(Status.Info, "<b>Response: </b> <br />" + RestMethods.response.Content);
                     break;
                 case TestStatus.Inconclusive:
                     logstatus = Status.Warning;
-                    ExtentReportManager.ExtentTestManager.getTest().Log(Status.Warning, "<b style=\"color: Tomato; \">Warning</b>");
+                    ExtentReportManager.ExtentTestManager.GetTest().Log(Status.Warning, "<b style=\"color: Tomato; \">Warning</b>");
                     break;
                 case TestStatus.Skipped:
                     logstatus = Status.Skip;
-                    ExtentReportManager.ExtentTestManager.getTest().Log(Status.Skip, "<b style=\"color: Orange; \">Skipped</b>");
+                    ExtentReportManager.ExtentTestManager.GetTest().Log(Status.Skip, "<b style=\"color: Orange; \">Skipped</b>");
                     break;
                 default:
                     logstatus = Status.Pass;
-                    ExtentReportManager.ExtentTestManager.getTest().Log(Status.Pass, "<b style=\"color: MediumSeaGreen; \">Pass</b>");
-                    ExtentReportManager.ExtentTestManager.getTest().Log(Status.Info, RestMethods.reqURL);
-                    //Manager.ExtentTestManager.getTest().Log(Status.Info, RestMethods.res.Content);
+                    ExtentReportManager.ExtentTestManager.GetTest().Log(Status.Pass, "<b style=\"color: MediumSeaGreen; \">Passed</b>");
+                    ExtentReportManager.ExtentTestManager.GetTest().Log(Status.Info, "<b>Response URL: </b> <br />" + RestMethods.response.ResponseUri.AbsoluteUri);
+                    ExtentReportManager.ExtentTestManager.GetTest().Log(Status.Info, "<b>Response Status: </b> <br />" + RestMethods.response.ResponseStatus.ToString());
+                    ExtentReportManager.ExtentTestManager.GetTest().Log(Status.Info, "<b>Response Status Code: </b> <br />" + RestMethods.response.StatusCode.ToString());
+                    ExtentReportManager.ExtentTestManager.GetTest().Log(Status.Info, "<b>Response: </b> <br />" + RestMethods.response.Content);
                     break;
             }
-            ExtentReportManager.ExtentManager.getExtent().Flush();
+            ExtentReportManager.ExtentManager.GetExtent().Flush();
         }
 
-        public String getTestCategories(String methodName)
+        public String GetTestCategories(String methodName)
         {
             var myAttribute = this.GetType().GetMethod(methodName).GetCustomAttributes(true).OfType<CategoryAttribute>().FirstOrDefault();
             return myAttribute.Name;
