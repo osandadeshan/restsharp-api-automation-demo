@@ -11,5 +11,5 @@
 4. Execute following commands \
     **`dotnet restore`** \
     **`dotnet build`**
-5. Execute the tests from "**test**" folder or you can use below command \
+5. Execute the tests from "**test**" folder or you can use below command to run the tests \
     **`dotnet test`**
