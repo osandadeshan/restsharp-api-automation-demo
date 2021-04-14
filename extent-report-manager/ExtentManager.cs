@@ -32,7 +32,7 @@ namespace RestSharpAPIAutomationDemo.ExtentReportManager
                     extent.AddSystemInfo("Restsharp Version", Constants.RESTSHARP_VERSION);
                     extent.AddSystemInfo("Environment", Constants.ENVIRONMENT);
                     extent.AddSystemInfo("Operating System", Constants.OPERATING_SYSTEM);
-                    extent.AddSystemInfo("Eexecution Type", Constants.EXECUTION_TYPE);
+                    extent.AddSystemInfo("Execution Type", Constants.EXECUTION_TYPE);
                 }
                 catch (Exception e)
                 {
